@@ -1,15 +1,18 @@
 package com.javasm.game.action;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.javasm.game.model.BookModel;
@@ -21,8 +24,27 @@ import com.javasm.game.vo.PlayVO;
 @Controller
 @RequestMapping("/game")
 public class GameHandler {
-
-	@RequestMapping(value = "test", method = RequestMethod.POST)
+	
+	@RequestMapping("jsonlist")
+	@ResponseBody
+	public Map<String,Object> getListJSON(){
+		Map<String,Object> map=new HashMap<>();
+		map.put("code", 1002);
+		GameModel gamemodel = new GameModel();
+		gamemodel.setId(12);
+		gamemodel.setName("爐石");
+		gamemodel.setUrl("www.blz.ccc");
+		map.put("game", gamemodel);
+		return map;
+		
+	}
+	
+	@RequestMapping("add")
+	public String jumpAddPage(){
+		return "game/add";
+	}
+	
+	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public ModelAndView gameTestPage() {
 		ModelAndView modelAndView = new ModelAndView();
 		modelAndView.addObject("hello", "注解 Hello SpringMVC");
@@ -34,6 +56,8 @@ public class GameHandler {
 	public String gameTestPage2(Map<String, Object> map) {
 		// model.addAttribute("hello", "Hello SpringMVC");
 		map.put("hello", "Hello SpringMVC");
+		int i=1/0;
+		System.out.println(i);
 		return "game/hello";// 相当于servlet转发的地址 前后已经在xml文件中配置过
 	}
 
@@ -84,5 +108,14 @@ public class GameHandler {
 			Map<String, Object> map) {
 		map.put("hello", id + name);
 		return "game/hello";
+	}
+	
+	@ExceptionHandler(Exception.class)
+	public ModelAndView myException(Exception e){
+		ModelAndView mv = new ModelAndView();
+		mv.addObject("myErroMessage", "发生异常/错误####### "+e.getMessage());
+		//mv.setViewName("forward:/my_erro.jsp");
+		mv.setViewName("500");
+		return mv;
 	}
 }

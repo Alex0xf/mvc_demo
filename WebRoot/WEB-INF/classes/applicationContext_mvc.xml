@@ -13,6 +13,52 @@
 		<property name="suffix" value=".jsp"></property>
 	</bean>
 	<context:component-scan base-package="com.javasm"></context:component-scan>
+	
+	<mvc:annotation-driven>
+		<!-- 消息转换器 -->
+		<mvc:message-converters>
+			<bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
+				<property name="supportedMediaTypes">
+					<list>
+						<value>text/html;charset=UTF-8</value>
+						<value>application/json</value>
+					</list>
+				</property>
+				<!-- 控制null值是否输出的 -->
+				<property name="features">
+					<list>
+						<value>WriteMapNullValue</value>
+					</list>
+				</property>
+			</bean>
+		</mvc:message-converters>
+	</mvc:annotation-driven>
+	<!-- 配置静态文件的访问 -->
+	<!-- <mvc:resources location="静态文件的实际路径" mapping="url访问的路径"></mvc:resources> 
+		从WebRoot开始计算根目录
+	-->
+	<mvc:resources location="/WEB-INF/resource/" mapping="resource/**/"></mvc:resources>
+	<mvc:resources location="/WEB-INF/resource/css/" mapping="css/**"></mvc:resources>
+	<mvc:resources location="/WEB-INF/resource/js/" mapping="js/**"></mvc:resources>
+    <!-- <mvc:resources location="/jquery-3.2.1.min.js" mapping="jquery-3.2.1.min.js"></mvc:resources> -->
+	<mvc:resources location="/upload/" mapping="/upload/**"></mvc:resources> 
+	
+	<!-- 配置文件上传  multipartResolver写这个id是因为源码中有对应的内容 寻找此id-->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 允许上传的文件大小 -->
+		<property name="maxUploadSize">
+			<value>1024000000</value>
+		</property>
+		<!-- 缓冲区大小 -->
+		<property name="maxInMemorySize">
+			<value>1024</value>
+		</property>
+		<!-- 编码 -->
+		<property name="defaultEncoding">
+			<value>UTF-8</value>
+		</property>
+	</bean>
+	
 	<!-- 开启注解 -->
 	<context:annotation-config></context:annotation-config>
 	<!-- BeanNameUrlHandlerMapping -->
