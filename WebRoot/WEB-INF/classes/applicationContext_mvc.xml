@@ -59,8 +59,15 @@
 		</property>
 	</bean>
 	
+	<!-- 拦截器 -->
+	<mvc:interceptors>
+		<bean class="com.javasm.adapter.LoginAdapter"></bean>
+	</mvc:interceptors>
+	
 	<!-- 开启注解 -->
 	<context:annotation-config></context:annotation-config>
+	
+	<!-- 在xml中注入bean -->
 	<!-- BeanNameUrlHandlerMapping -->
 	<!-- <bean class="org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping"></bean> -->
 	<!-- 注入gameAction -->

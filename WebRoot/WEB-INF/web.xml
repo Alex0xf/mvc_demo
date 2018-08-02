@@ -16,6 +16,7 @@
     <param-name>contextConfigLocation</param-name>
     <param-value>classpath:applicationContext.xml</param-value>
   </context-param>
+<!-- 配置SpringMVC -->
   <servlet>
   	<servlet-name>mvc</servlet-name>
   	<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -29,7 +30,7 @@
   	<servlet-name>mvc</servlet-name>
   	<url-pattern>/</url-pattern>
   </servlet-mapping>
-  
+<!-- 配置过滤器  乱码过滤器 -->
   <filter>
   	<filter-name>Encoding</filter-name>
   	<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>

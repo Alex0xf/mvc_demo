@@ -1,6 +1,8 @@
 package com.javasm.game.action;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +38,23 @@ public class GameHandler {
 		gamemodel.setUrl("www.blz.ccc");
 		map.put("game", gamemodel);
 		return map;
-		
+	}
+
+	@RequestMapping("message") 
+	@ResponseBody
+	public String fideMessage(){
+		return "收到消息";
+	}
+	
+	@RequestMapping("glist")
+	@ResponseBody
+	public List<GameModel> findeGameList(){
+		System.out.println("glist被调用");
+		List<GameModel> list = new ArrayList<GameModel>();
+		list.add(new GameModel(12,"魔兽","a"));
+		list.add(new GameModel(13,"星际","吧"));
+		list.add(new GameModel(14,"红警","v"));
+		return list;
 	}
 	
 	@RequestMapping("add")
