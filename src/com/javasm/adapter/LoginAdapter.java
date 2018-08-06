@@ -10,7 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 /**
  * 
  * ClassName: LoginAdapter 
- * @Description: 登录拦截器
+ * @Description: 登录拦截器 拦截的是Spring框架里面的东西
  * @author Alex
  * @date 2018年8月3日
  */
@@ -30,12 +30,13 @@ public class LoginAdapter extends HandlerInterceptorAdapter{
 		String username = (String) session.getAttribute("user_name");
 		if(username == null || username.trim().isEmpty()){
 			//登录失败
-			request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(request, response);
+			//request.getRequestDispatcher("/WEB-INF/jsp/login/login.jsp").forward(request, response);
 			//重定向到登录页
-			//response.sendRedirect(request.getContextPath()+"/login/loginPage");
+			response.sendRedirect(request.getContextPath()+"/login/loginPage");
 		}
 		return super.preHandle(request, response, handler);
 	}
+	
 	@Override
 	public void afterConcurrentHandlingStarted(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {

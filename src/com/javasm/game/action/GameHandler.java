@@ -61,6 +61,13 @@ public class GameHandler {
 	public String jumpAddPage(){
 		return "game/add";
 	}
+	@RequestMapping("addtest")
+	public ModelAndView jumpAdd(){
+		ModelAndView mv=new ModelAndView();
+		mv.addObject("name", "测试");
+		mv.setViewName("game/add");
+		return mv;
+	}
 	
 	@RequestMapping(value = "test", method = RequestMethod.GET)
 	public ModelAndView gameTestPage() {
